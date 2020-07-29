@@ -61,7 +61,7 @@ function runBackup() {
     mv $dst $backups/$date
 
     # Delete old. Just keep 20 newest.
-    ls -1 $backups | grep -E "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}_[0-9]{2}_[0-9]{2}\$" | head -n -20 | while read line; do rm -fr $backups/$line ; done
+    ls -1 $backups | grep -E "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}_[0-9]{2}_[0-9]{2}\$" | head -n -20 | while read line; do  find $backups/$line -type d -exec chmod 755 '{}' \; ;  rm -fr $backups/$line ; done
     # TODO optimization: instead of just deleting an old dir, we could have reused it in the top of the script, and let rsync update it for us.
 }
 
